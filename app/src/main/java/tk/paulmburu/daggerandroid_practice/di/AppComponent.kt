@@ -10,7 +10,8 @@ import tk.paulmburu.daggerandroid_practice.BaseApplication
 @Component(
     modules = [
         AndroidSupportInjectionModule::class,
-        ActivityBuildersModule::class
+        ActivityBuildersModule::class,
+        AppModule::class
     ]
 )
 interface AppComponent: AndroidInjector<BaseApplication> {
