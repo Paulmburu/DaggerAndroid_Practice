@@ -4,9 +4,14 @@ import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
+import dagger.android.support.AndroidSupportInjectionModule
 import tk.paulmburu.daggerandroid_practice.BaseApplication
 
-@Component
+@Component(
+    modules = [
+        AndroidSupportInjectionModule::class
+    ]
+)
 interface AppComponent: AndroidInjector<BaseApplication> {
 
     @Component.Builder
