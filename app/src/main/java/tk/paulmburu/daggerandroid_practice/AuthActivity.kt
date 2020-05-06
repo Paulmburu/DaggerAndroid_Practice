@@ -1,24 +1,31 @@
 package tk.paulmburu.daggerandroid_practice
 
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.RequestManager
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 class AuthActivity : DaggerAppCompatActivity() {
 
     @Inject
-    lateinit var mySSString:String
+    lateinit var logo: Drawable
 
-    var isAppNull: Boolean = false
-        @Inject set
-
+    @Inject
+    lateinit var requestManager: RequestManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
+        setLogo()
+    }
 
-        findViewById<TextView>(R.id.text).setText("$mySSString & is Application null ? = $isAppNull")
+    fun setLogo(){
+        requestManager
+            .load(logo)
+            .into(findViewById(R.id.login_logo) as ImageView)
     }
 }
