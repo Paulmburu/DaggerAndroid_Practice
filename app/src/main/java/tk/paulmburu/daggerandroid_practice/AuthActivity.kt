@@ -11,10 +11,14 @@ class AuthActivity : DaggerAppCompatActivity() {
     @Inject
     lateinit var mySSString:String
 
+    var isAppNull: Boolean = false
+        @Inject set
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
 
-        findViewById<TextView>(R.id.text).setText(mySSString)
+        findViewById<TextView>(R.id.text).setText("$mySSString & is Application null ? = $isAppNull")
     }
 }
