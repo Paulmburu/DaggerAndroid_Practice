@@ -1,8 +1,8 @@
 package tk.paulmburu.daggerandroid_practice.ui.auth
 
 import android.util.Log
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import io.reactivex.Observer
 import io.reactivex.schedulers.Schedulers
 import tk.paulmburu.daggerandroid_practice.models.User
 import tk.paulmburu.daggerandroid_practice.network.auth.AuthApi
@@ -11,6 +11,24 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(authApi: AuthApi) : ViewModel() {
     val TAG = "AuthViewModel"
     var thisAuthApi = authApi
+
+    var authUser: MediatorLiveData<User> = MediatorLiveData()
+
+    fun authenticateWitId(userId: Int){
+        var source: LiveData<User> = LiveDataReactiveStreams.fromPublisher(
+            thisAuthApi.getUser(userId)
+                .subscribeOn(Schedulers.io())
+        )
+
+        authUser.addSource(source, Observer<User>(){
+            authUser.value = it
+            authUser.removeSource(source)
+        })
+    }
+
+    fun observeUser(): LiveData<User>{
+        return authUser
+    }
 
 
     init {
