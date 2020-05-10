@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
+import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.RequestManager
@@ -22,6 +20,8 @@ class AuthActivity : DaggerAppCompatActivity(), View.OnClickListener {
     lateinit var viewModel: AuthViewModel
 
     lateinit var userId : EditText
+
+    lateinit var progressBar: ProgressBar
 
     val TAG = "AuthActivity"
 
@@ -39,6 +39,7 @@ class AuthActivity : DaggerAppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_auth)
 
         userId = findViewById(R.id.user_id_input)
+        progressBar = findViewById(R.id.progress_bar)
 
         findViewById<Button>(R.id.login_button).setOnClickListener(this)
 
@@ -48,11 +49,39 @@ class AuthActivity : DaggerAppCompatActivity(), View.OnClickListener {
     }
 
     fun subscribeObservers(){
-        viewModel.observeUser().observe(this, Observer<User>(){
+        viewModel.observeUser().observe(this, Observer<AuthResource<User>>(){
             if (it != null){
-                Log.d(TAG, "onChanged ${it.email}")
+                when(it.status){
+                    AuthResource.AuthStatus.LOADING -> {
+                        showProgressBar(true)
+                        return@Observer
+                    }
+                    AuthResource.AuthStatus.AUTHENTICATED -> {
+                        showProgressBar(false)
+                        Log.d(TAG, "onChange: LOGIN SUCCESS: ${it.data.email}")
+                        return@Observer
+                    }
+                    AuthResource.AuthStatus.ERROR -> {
+                        showProgressBar(false)
+                         Toast.makeText(this, "${it.message} \n Did you a number between 1 and 10?", Toast.LENGTH_LONG).show()
+                        return@Observer
+                    }
+                    AuthResource.AuthStatus.NOT_AUTHENTICATED -> {
+                        showProgressBar(false)
+                        return@Observer
+                    }
+                }
             }
         })
+    }
+
+    fun showProgressBar(isVisible: Boolean){
+        if(isVisible){
+            progressBar.visibility = View.VISIBLE
+        }else{
+            progressBar.visibility = View.GONE
+        }
+
     }
 
     fun setLogo(){
