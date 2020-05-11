@@ -5,23 +5,29 @@ import androidx.lifecycle.*
 import io.reactivex.Observer
 import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
+import tk.paulmburu.daggerandroid_practice.SessionManager
 import tk.paulmburu.daggerandroid_practice.models.User
 import tk.paulmburu.daggerandroid_practice.network.auth.AuthApi
 import java.lang.Exception
 import javax.inject.Inject
 
-class AuthViewModel @Inject constructor(authApi: AuthApi) : ViewModel() {
+class AuthViewModel @Inject constructor(authApi: AuthApi, sessionManager: SessionManager) : ViewModel() {
     val TAG = "AuthViewModel"
     var thisAuthApi = authApi
+    var sessionManager = sessionManager
 
     var authUser: MediatorLiveData<AuthResource<User>> = MediatorLiveData()
 
     fun authenticateWitId(userId: Int) {
-        authUser.value = AuthResource.loading(User(0,"","",""))
+        Log.d(TAG,"AuthenticateWithUser-> Attempting to login")
 
-        var source: LiveData<AuthResource<User>> = LiveDataReactiveStreams.fromPublisher(
+        sessionManager.authenticateWithId(queryUserId(userId))
+    }
+
+    fun queryUserId(userId: Int): LiveData<AuthResource<User>>{
+        return LiveDataReactiveStreams.fromPublisher(
             thisAuthApi.getUser(userId)
-                    // instead of calling on error (error happens)
+                // instead of calling on error (error happens)
                 .onErrorReturn(Function<Throwable, User> { it ->
                     Log.d(TAG," NGORIIIIIIIII")
                     return@Function User(-1, "", "", "")
@@ -34,15 +40,10 @@ class AuthViewModel @Inject constructor(authApi: AuthApi) : ViewModel() {
                 })
                 .subscribeOn(Schedulers.io())
         )
-
-        authUser.addSource(source, Observer<AuthResource<User>>() {
-            authUser.value = it
-            authUser.removeSource(source)
-        })
     }
 
-    fun observeUser(): LiveData<AuthResource<User>> {
-        return authUser
+    fun observeAuthState(): LiveData<AuthResource<User>> {
+        return sessionManager.getAuthUser()
     }
 
 
