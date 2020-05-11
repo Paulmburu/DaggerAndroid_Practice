@@ -3,7 +3,7 @@ package tk.paulmburu.daggerandroid_practice.ui.auth
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 
-class AuthResource<T>(@field:NonNull @param:NonNull val status: AuthStatus, @field:Nullable @param:Nullable val data: Any?, @field:Nullable @param:Nullable val message: String?) {
+class AuthResource<T>(@field:NonNull @param:NonNull val status: AuthStatus, @field:Nullable @param:Nullable val data: T?, @field:Nullable @param:Nullable val message: String?) {
 
     enum class AuthStatus {
         AUTHENTICATED, ERROR, LOADING, NOT_AUTHENTICATED
@@ -22,7 +22,7 @@ class AuthResource<T>(@field:NonNull @param:NonNull val status: AuthStatus, @fie
             return AuthResource(AuthStatus.LOADING, data, null)
         }
 
-        fun <T> logout(): AuthResource<T> {
+        fun <T>  logout(): AuthResource<T> {
             return AuthResource<T>(AuthStatus.NOT_AUTHENTICATED, null, null)
         }
     }

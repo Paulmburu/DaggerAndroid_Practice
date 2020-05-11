@@ -49,7 +49,7 @@ class AuthActivity : DaggerAppCompatActivity(), View.OnClickListener {
     }
 
     fun subscribeObservers(){
-        viewModel.observeUser().observe(this, Observer<AuthResource<User>>(){
+        viewModel.observeAuthState().observe(this, Observer<AuthResource<User>>(){
             if (it != null){
                 when(it.status){
                     AuthResource.AuthStatus.LOADING -> {
@@ -58,7 +58,7 @@ class AuthActivity : DaggerAppCompatActivity(), View.OnClickListener {
                     }
                     AuthResource.AuthStatus.AUTHENTICATED -> {
                         showProgressBar(false)
-                        Log.d(TAG, "onChange: LOGIN SUCCESS: ${it.data.email}")
+                        Log.d(TAG, "onChange: LOGIN SUCCESS: ${it.data?.email}")
                         return@Observer
                     }
                     AuthResource.AuthStatus.ERROR -> {

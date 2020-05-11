@@ -27,7 +27,7 @@ class SessionManager @Inject constructor() {
 
     fun logout(){
         Log.d(TAG,"logOut: logging out")
-        cachedUser.value = AuthResource.logout<User>()
+        cachedUser.value =  AuthResource.logout<User>()
     }
 
     fun getAuthUser(): LiveData<AuthResource<User>>{
