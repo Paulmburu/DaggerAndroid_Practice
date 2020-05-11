@@ -6,6 +6,7 @@ import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import tk.paulmburu.daggerandroid_practice.BaseApplication
+import tk.paulmburu.daggerandroid_practice.SessionManager
 import javax.inject.Singleton
 
 @Singleton
@@ -18,6 +19,8 @@ import javax.inject.Singleton
     ]
 )
 interface AppComponent: AndroidInjector<BaseApplication> {
+
+    val sessionManager: SessionManager
 
     @Component.Builder
     interface Builder{
