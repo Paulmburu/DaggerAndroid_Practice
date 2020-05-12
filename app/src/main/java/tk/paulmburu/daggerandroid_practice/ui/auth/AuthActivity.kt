@@ -1,5 +1,6 @@
 package tk.paulmburu.daggerandroid_practice.ui.auth
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.TextUtils
@@ -12,6 +13,7 @@ import com.bumptech.glide.RequestManager
 import dagger.android.support.DaggerAppCompatActivity
 import tk.paulmburu.daggerandroid_practice.R
 import tk.paulmburu.daggerandroid_practice.models.User
+import tk.paulmburu.daggerandroid_practice.ui.main.MainActivity
 import tk.paulmburu.daggerandroid_practice.viewmodels.ViewModelProviderFactory
 import javax.inject.Inject
 
@@ -59,6 +61,7 @@ class AuthActivity : DaggerAppCompatActivity(), View.OnClickListener {
                     AuthResource.AuthStatus.AUTHENTICATED -> {
                         showProgressBar(false)
                         Log.d(TAG, "onChange: LOGIN SUCCESS: ${it.data?.email}")
+                        onLoginSuccess()
                         return@Observer
                     }
                     AuthResource.AuthStatus.ERROR -> {
@@ -73,6 +76,11 @@ class AuthActivity : DaggerAppCompatActivity(), View.OnClickListener {
                 }
             }
         })
+    }
+
+    fun onLoginSuccess(){
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 
     fun showProgressBar(isVisible: Boolean){
