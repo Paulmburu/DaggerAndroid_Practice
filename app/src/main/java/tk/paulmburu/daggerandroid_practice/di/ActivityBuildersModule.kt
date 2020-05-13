@@ -5,6 +5,7 @@ import dagger.android.ContributesAndroidInjector
 import tk.paulmburu.daggerandroid_practice.di.auth.AuthModule
 import tk.paulmburu.daggerandroid_practice.di.auth.AuthViewModelModule
 import tk.paulmburu.daggerandroid_practice.di.main.MainFragmentBuildersModule
+import tk.paulmburu.daggerandroid_practice.di.main.MainViewModelsModule
 import tk.paulmburu.daggerandroid_practice.ui.auth.AuthActivity
 import tk.paulmburu.daggerandroid_practice.ui.main.MainActivity
 
@@ -16,7 +17,7 @@ abstract class ActivityBuildersModule {
     abstract fun contributeAuthInjector(): AuthActivity
 
     @ContributesAndroidInjector(
-        modules = [MainFragmentBuildersModule::class]
+        modules = [MainFragmentBuildersModule::class, MainViewModelsModule::class]
     )
     abstract fun contrbuteMainInjector(): MainActivity
 }
