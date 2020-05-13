@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import tk.paulmburu.daggerandroid_practice.BaseActivity
 import tk.paulmburu.daggerandroid_practice.R
+import tk.paulmburu.daggerandroid_practice.ui.main.posts.PostsFragment
 import tk.paulmburu.daggerandroid_practice.ui.main.profile.ProfileFragment
 
 class MainActivity : BaseActivity() {
@@ -18,7 +19,7 @@ class MainActivity : BaseActivity() {
     }
     fun testFragment(){
         supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container,ProfileFragment())
+            .replace(R.id.main_container,PostsFragment())
             .commit()
     }
 
