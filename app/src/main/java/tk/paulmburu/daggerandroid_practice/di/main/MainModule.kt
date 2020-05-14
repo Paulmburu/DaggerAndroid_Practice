@@ -10,11 +10,13 @@ import tk.paulmburu.daggerandroid_practice.ui.main.posts.PostsRecyclerAdapter
 @Module
 class MainModule {
 
+    @MainScope
     @Provides
     fun provideAdapter():PostsRecyclerAdapter{
         return PostsRecyclerAdapter()
     }
 
+    @MainScope
     @Provides
     fun provideMainApi(retrofit: Retrofit): MainApi {
         return retrofit.create(MainApi::class.java)
