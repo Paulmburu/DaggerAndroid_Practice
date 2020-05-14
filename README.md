@@ -2,7 +2,7 @@
 An android app i rewrote using kotlin while going through [Mitch Tabians dagger2 learning resources](https://www.youtube.com/watch?v=3qZh6Fyrz-k&list=PLgCYzUzKIBE8AOAspC3DHoBNZIBHbIOsC) -> [CodingWithMitch](https://codingwithmitch.com/). Awesome content to stabalize one's Dagger-android knowledge.
 
 ## Credits
-This awesome guy (Mitch Tabian)[https://github.com/mitchtabian]
+This awesome guy [Mitch Tabian](https://github.com/mitchtabian)
 
 ## Libraries Used
 * [Dagger2][0] - A fast dependency injector for Java and Android.
