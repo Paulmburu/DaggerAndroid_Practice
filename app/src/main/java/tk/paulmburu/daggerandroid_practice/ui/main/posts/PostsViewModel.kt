@@ -52,10 +52,8 @@ class PostsViewModel @Inject constructor(sessionManager: SessionManager, mainApi
                 )
             posts.addSource(
                 source, Observer<Resource<List<Post>>>() {
-                    fun onChanged(listResource: Resource<List<Post>>) {
-                        posts.setValue(listResource)
+                        posts.setValue(it)
                         posts.removeSource(source)
-                    }
                 })
         }
         return posts
