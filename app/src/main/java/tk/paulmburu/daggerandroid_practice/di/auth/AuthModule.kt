@@ -8,6 +8,7 @@ import tk.paulmburu.daggerandroid_practice.network.auth.AuthApi
 @Module
 class AuthModule {
 
+    @AuthScope
     @Provides
     fun provideAuthApi(retrofit: Retrofit): AuthApi {
         return retrofit.create(AuthApi::class.java)

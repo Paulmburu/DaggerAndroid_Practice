@@ -2,7 +2,6 @@ package tk.paulmburu.daggerandroid_practice.ui.auth
 
 import android.util.Log
 import androidx.lifecycle.*
-import io.reactivex.Observer
 import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
 import tk.paulmburu.daggerandroid_practice.SessionManager
